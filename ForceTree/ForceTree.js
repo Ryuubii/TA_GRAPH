@@ -17,8 +17,8 @@ export async function forceTree(params) {
             .force("x", d3.forceX())
             .force("y", d3.forceY());
     
-        const fakeDom = new JSDOM('<!DOCTYPE html><html><body></body></html>');
-        const body = d3.select(fakeDom.window.document).select('body'); 
+        const fakeDom = new JSDOM("<!DOCTYPE html><html><body></body></html>");
+        const body = d3.select(fakeDom.window.document).select("body"); 
         const svg = body.append("svg")
             .attr("viewBox", [-1920 / 2, -1080 / 2, 1920, 1080]);
     
@@ -54,10 +54,10 @@ export async function forceTree(params) {
             .attr("cx", d => d.x)
             .attr("cy", d => d.y);
         });
-    
-        return svg.node();
+        
+        return body.html();
     } catch(e) {
-        console.log("Error: " + e);
+        console.error("Error: " + e);
         return {};
     }
     

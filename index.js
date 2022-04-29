@@ -8,7 +8,7 @@ const { JSDOM } = jsdom;
 app.use(express.urlencoded({extended:true}));
 
 async function forceTree(params) {
-    const data = d3.csv("/datakegiatanorganisasimhs_2016-2020.csv");
+    const data = d3.csv("./datakegiatanorganisasimhs_2016-2020.csv");
     const root = d3.hierarchy(data);
     const links = root.links();
     const nodes = root.descendants(); 

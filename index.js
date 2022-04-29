@@ -10,9 +10,9 @@ app.use('/static', express.static('public'))
 
 app.get('/test', async(req, res) => {
     
-    return res.send(forceTree());
+    return res.send(await forceTree());
 });
 
 app.listen(3000, function () {
-    console.log("Listening to port 3000");
+    console.log("Listening to port 3000 \n http://localhost:3000");
 })

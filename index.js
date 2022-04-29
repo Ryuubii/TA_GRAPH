@@ -1,8 +1,10 @@
 import express from "express"
 import * as d3 from "d3"
+import jsdom from "jsdom"
 import neo4j from "neo4j-driver"
 const app = express();
 import fs from "fs"
+const { JSDOM } = jsdom;
 app.use(express.urlencoded({extended:true}));
 
 async function forceTree(params) {
@@ -110,6 +112,8 @@ app.post('/api/uploadData', async(req, res) => {
 });
 
 app.get('/test', async(req, res) => {
+    const fakeDom = new JSDOM('<!DOCTYPE html><html><body></body></html>');
+    const document = fakeDom.window.document;
     return res.send(forceTree());
 });
 

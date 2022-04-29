@@ -1,15 +1,17 @@
 import express from "express"
 import * as d3 from "d3"
+import jsdom from "jsdom"
 import neo4j from "neo4j-driver"
 const app = express();
 import fs from "fs"
+const { JSDOM } = jsdom;
 app.use(express.urlencoded({extended:true}));
 
 async function forceTree(params) {
     const data = d3.csv("/datakegiatanorganisasimhs_2016-2020.csv");
     const root = d3.hierarchy(data);
     const links = root.links();
-    const nodes = root.descendants();
+    const nodes = root.descendants(); 
   
     const simulation = d3.forceSimulation(nodes)
         .force("link", d3.forceLink(links).id(d => d.id).distance(0).strength(1))
@@ -17,7 +19,8 @@ async function forceTree(params) {
         .force("x", d3.forceX())
         .force("y", d3.forceY());
   
-    const svg = d3.create("svg")
+    const body = d3.select(fakeDom.window.document).select('body'); 
+    const svg = body.append("svg")
         .attr("viewBox", [-width / 2, -height / 2, width, height]);
   
     const link = svg.append("g")
@@ -110,6 +113,7 @@ app.post('/api/uploadData', async(req, res) => {
 });
 
 app.get('/test', async(req, res) => {
+    
     return res.send(forceTree());
 });
 

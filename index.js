@@ -19,9 +19,11 @@ async function forceTree(params) {
         .force("x", d3.forceX())
         .force("y", d3.forceY());
   
+    const fakeDom = new JSDOM('<!DOCTYPE html><html><body></body></html>');
+    const document = fakeDom.window.document;
     const body = d3.select(fakeDom.window.document).select('body'); 
     const svg = body.append("svg")
-        .attr("viewBox", [-width / 2, -height / 2, width, height]);
+        .attr("viewBox", [-1920 / 2, -1080 / 2, 1920, 1080]);
   
     const link = svg.append("g")
         .attr("stroke", "#999")
@@ -39,8 +41,7 @@ async function forceTree(params) {
       .join("circle")
         .attr("fill", d => d.children ? null : "#000")
         .attr("stroke", d => d.children ? null : "#fff")
-        .attr("r", 3.5)
-        .call(drag(simulation));
+        .attr("r", 3.5);
   
     node.append("title")
         .text(d => d.data.name);

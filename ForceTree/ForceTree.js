@@ -5,20 +5,22 @@ import jsdom from "jsdom";
 const { JSDOM } = jsdom;
 
 export async function forceTree(params) {
+    const fakeDom = new JSDOM("<!DOCTYPE html><html><body></body></html>");
+    const body = d3.select(fakeDom.window.document).select("body");
+
     try {
         const data = await d3.csv("http://localhost:3000/static/datakegiatanorganisasimhs_2016-2020.csv");
+        console.log(data);
         const root = d3.hierarchy(data);
         const links = root.links();
         const nodes = root.descendants(); 
-    
+
         const simulation = d3.forceSimulation(nodes)
             .force("link", d3.forceLink(links).id(d => d.id).distance(0).strength(1))
             .force("charge", d3.forceManyBody().strength(-50))
             .force("x", d3.forceX())
             .force("y", d3.forceY());
     
-        const fakeDom = new JSDOM("<!DOCTYPE html><html><body></body></html>");
-        const body = d3.select(fakeDom.window.document).select("body"); 
         const svg = body.append("svg")
             .attr("viewBox", [-1920 / 2, -1080 / 2, 1920, 1080]);
     
@@ -60,5 +62,4 @@ export async function forceTree(params) {
         console.error("Error: " + e);
         return {};
     }
-    
 }

@@ -1,6 +1,7 @@
 import express from "express";
 import neo4j from "neo4j-driver";
 
+import { forceGraph } from "./ForceGraph/ForceGraph.js";
 import { forceTree } from "./ForceTree/ForceTree.js"
 
 const app = express();
@@ -11,6 +12,11 @@ app.use('/static', express.static('public'))
 app.get('/test', async(req, res) => {
     
     return res.send(await forceTree());
+});
+
+app.get('/fg', async(req, res) => {
+    
+    return res.send(await forceGraph());
 });
 
 app.listen(3000, function () {

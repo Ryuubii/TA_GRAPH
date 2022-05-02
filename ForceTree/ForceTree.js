@@ -25,7 +25,7 @@ export async function forceTree(params) {
         nodes = nodes.map(n => {return {name: n}});
 
         const simulation = d3.forceSimulation(nodes)
-            .force("link", d3.forceLink(links).id(d => d.index).distance(0).strength(1))
+            .force("link", d3.forceLink(links).id(d => d.index).distance(100).strength(2))
             .force("charge", d3.forceManyBody().strength(-50))
             .force("x", d3.forceX())
             .force("y", d3.forceY());
@@ -53,6 +53,18 @@ export async function forceTree(params) {
     
         node.append("title")
             .text(d => d.name);
+
+        node.call(() => {
+            link
+                .attr("x1", d => d.source.x)
+                .attr("y1", d => d.source.y)
+                .attr("x2", d => d.target.x)
+                .attr("y2", d => d.target.y);
+        
+            node
+                .attr("cx", d => d.x)
+                .attr("cy", d => d.y);
+        });
     
         simulation.on("tick", () => {
             link
@@ -66,7 +78,7 @@ export async function forceTree(params) {
                 .attr("cy", d => d.y);
         });
 
-        return body.html();
+        return await body.html();
     } catch(e) {
         console.error("Error: " + e);
         return {};

@@ -19,6 +19,10 @@ app.get('/fg', async(req, res) => {
     return res.send(await forceGraph());
 });
 
+app.get('/cytoscape', async(req, res) => {
+    
+});
+
 app.listen(3000, function () {
     console.log("Listening to port 3000 \n http://localhost:3000");
 })

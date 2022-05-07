@@ -2,14 +2,12 @@ import "jsdom-global/register.js";
 import cytoscape from "cytoscape";
 import markovCluster from "cytoscape-markov-cluster";
 import { readCsv } from "../Helpers/ReadCsv.js";
-import jsdom from "jsdom";
 markovCluster(cytoscape);
 
 export async function cyto(params) {
-    const { document } = (new jsdom.JSDOM("<!DOCTYPE html><html><body></body></html>")).window;
     var cy = cytoscape({
         headless: true,
-        container: document.body,
+        container: window,
     });
     var eles = [];
     const data = await readCsv("datakegiatanorganisasimhs_2016-2020.csv");
@@ -34,5 +32,5 @@ export async function cyto(params) {
         //  ]
     });
 
-    return document.body.innerHTML;
+    return window.document.body.innerHTML;
 }

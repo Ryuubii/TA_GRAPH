@@ -7,7 +7,9 @@ markovCluster(cytoscape);
 
 export async function cyto(params) {
     const fakeDom = new JSDOM("<!DOCTYPE html><html><body></body></html>");
-    var cy = fakeDom.window.document.body = cytoscape({});
+    var cy = cytoscape({
+        container: fakeDom.window.document.body,
+       });
     var eles = [];
     const data = await readCsv("datakegiatanorganisasimhs_2016-2020.csv");
     for (let i = 0; i < data.length; i++) {

@@ -2,13 +2,13 @@ import "jsdom-global/register.js";
 import cytoscape from "cytoscape";
 import markovCluster from "cytoscape-markov-cluster";
 import { readCsv } from "../Helpers/ReadCsv.js";
-// import jsdom from "jsdom";
-// const { JSDOM } = jsdom;
+import jsdom from "jsdom";
 markovCluster(cytoscape);
 
 export async function cyto(params) {
-    // const { document } = (new JSDOM("<!DOCTYPE html><html><body></body></html>")).window;
+    const { document } = (new jsdom.JSDOM("<!DOCTYPE html><html><body></body></html>")).window;
     var cy = cytoscape({
+        headless: true,
         container: document.body,
     });
     var eles = [];
@@ -34,5 +34,5 @@ export async function cyto(params) {
         //  ]
     });
 
-    return await document.body.html();
+    return document.body.innerHTML;
 }

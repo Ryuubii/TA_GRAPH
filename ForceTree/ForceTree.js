@@ -66,7 +66,7 @@ export async function forceTree(params) {
                 .attr("cy", d => d.y);
         });
     
-        simulation.on("tick", () => {
+        node.call(() => {
             link
                 .attr("x1", d => d.source.x)
                 .attr("y1", d => d.source.y)

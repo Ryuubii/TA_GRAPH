@@ -3,6 +3,7 @@ import neo4j from "neo4j-driver";
 
 import { forceGraph } from "./ForceGraph/ForceGraph.js";
 import { forceTree } from "./ForceTree/ForceTree.js"
+import { cyto } from "./Cytoscape/Cytoscape.js";
 
 const app = express();
 app.use(express.urlencoded({extended:true}));
@@ -20,7 +21,7 @@ app.get('/fg', async(req, res) => {
 });
 
 app.get('/cytoscape', async(req, res) => {
-    
+    return res.send(await cyto());
 });
 
 app.listen(3000, function () {

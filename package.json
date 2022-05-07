@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "csv": "^6.0.5",
     "cytoscape": "^3.21.1",
     "cytoscape-markov-cluster": "github:cytoscape/cytoscape.js-markov-cluster",
     "d3": "^7.4.4",

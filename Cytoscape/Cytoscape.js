@@ -1,15 +1,16 @@
+import "jsdom-global/register.js";
 import cytoscape from "cytoscape";
 import markovCluster from "cytoscape-markov-cluster";
 import { readCsv } from "../Helpers/ReadCsv.js";
-import jsdom from "jsdom";
-const { JSDOM } = jsdom;
+// import jsdom from "jsdom";
+// const { JSDOM } = jsdom;
 markovCluster(cytoscape);
 
 export async function cyto(params) {
-    const fakeDom = new JSDOM("<!DOCTYPE html><html><body></body></html>");
+    // const { document } = (new JSDOM("<!DOCTYPE html><html><body></body></html>")).window;
     var cy = cytoscape({
-        container: fakeDom.window.document.body,
-       });
+        container: document.body,
+    });
     var eles = [];
     const data = await readCsv("datakegiatanorganisasimhs_2016-2020.csv");
     for (let i = 0; i < data.length; i++) {
@@ -33,5 +34,5 @@ export async function cyto(params) {
         //  ]
     });
 
-    return await body.html();
+    return await document.body.html();
 }

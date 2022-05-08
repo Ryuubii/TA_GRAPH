@@ -1,21 +1,32 @@
 import "jsdom-global/register.js";
 import cytoscape from "cytoscape";
 import { readCsv } from "../Helpers/ReadCsv.js";
+import { getNodesAndLinks } from "../Helpers/GetNodesAndLinks.js";
 
 export async function cyto(params) {
     var cy = cytoscape({
         headless: true,
-        container: window,
+        container: window.document.body,
     });
     var eles = [];
     const data = await readCsv("datakegiatanorganisasimhs_2016-2020.csv");
-    for (let i = 0; i < data.length; i++) {
-        cy.add([
-            {group: 'nodes', data: {id: data[i].mhs_nrp}},
-            {group: 'nodes', data: {id: data[i].keg_kode}},
-            {group: 'edges', data: {id: 'e'+i, source: data[i].mhs_nrp, target: data[i].keg_kode}}
-        ])
-    }
+    const { nodes, links } = getNodesAndLinks(data);
+    nodes.forEach((node) => {
+        cy.add({group: 'nodes', data: {id: node.name}});
+    })
+    var ctr = 0;
+    links.forEach((link) => {
+        cy.add({group: 'edges', data: {id: 'e'+ctr, source: link.source, target: link.target}});
+        ctr++;
+    })
 
-    return window.document.body.innerHTML;
+    let ccn = cy.elements().closenessCentralityNormalized({ /* my options */ });
+
+    cy.nodes().forEach( n => {
+    n.data({
+        ccn: ccn.closeness( n )
+    });
+    } );
+
+    return cy.data();
 }

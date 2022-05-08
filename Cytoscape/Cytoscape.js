@@ -4,19 +4,27 @@ import { readCsv } from "../Helpers/ReadCsv.js";
 import { getNodesAndLinks } from "../Helpers/GetNodesAndLinks.js";
 
 export async function cyto(params) {
-    var cy = cytoscape({
+    let cy = cytoscape({
         headless: true,
         container: window.document.body,
     });
-    var eles = [];
+    let elesNode = [];
+    let elesLink = [];
     const data = await readCsv("datakegiatanorganisasimhs_2016-2020.csv");
     const { nodes, links } = getNodesAndLinks(data);
     nodes.forEach((node) => {
-        cy.add({group: 'nodes', data: {id: node.name}});
+        // cy.add({group: 'nodes', data: {id: node.name}});
+        elesNode.push(node.name);
+        console
     })
     var ctr = 0;
     links.forEach((link) => {
-        cy.add({group: 'edges', data: {id: 'e'+ctr, source: link.source, target: link.target}});
+        // cy.add({group: 'edges', data: {id: 'e'+ctr, source: link.source, target: link.target}});
+        elesLink.push({
+            id: 'e'+ctr,
+            source: link.source,
+            target: link.target
+        })
         ctr++;
     })
 
@@ -28,5 +36,9 @@ export async function cyto(params) {
     });
     } );
 
-    return cy.data();
+    // return cy.data();
+    console.log(elesNode);
+    console.log("LINKS")
+    console.log(elesLink);
+    return elesNode;
 }

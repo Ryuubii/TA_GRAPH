@@ -5,10 +5,11 @@ export function getEles(data) {
   data.forEach(d => {
     Object.entries(d).forEach(([key, val]) => {
       if (nodes.indexOf(val.trim()) < 0) {
-        nodes.push({ data: { id: val.trim() } })
+        nodes.push({ group: 'nodes', data: { id: val.trim() } })
       }
     });
     edges.push({
+      group: 'edges',
       data: {
         id: "e" + i.toString(),
         source: Object.values(d)[0],

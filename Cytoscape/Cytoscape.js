@@ -9,8 +9,6 @@ export async function cyto(params) {
         headless: true,
         container: window.document.body,
     });
-    let elesNode = [];
-    let elesLink = [];
     const data = await readCsv("datakegiatanorganisasimhs_2016-2020.csv");
     const eles = getEles(data);
     cy.add(eles);

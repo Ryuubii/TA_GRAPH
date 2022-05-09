@@ -6,6 +6,7 @@ import { forceGraph } from "./ForceGraph/ForceGraph.js";
 import { forceTree } from "./ForceTree/ForceTree.js";
 import { closenessCentrality } from "./Cytoscape/ClosenessCentrality.js";
 import { cytoGraph } from "./Cytoscape/CytoGraph.js";
+import { cytoSnapGraph } from "./Cytoscape/Cytosnap.js";
 
 const app = express();
 app.use(express.urlencoded({ extended: true }));
@@ -23,8 +24,13 @@ app.get("/forcegraph", async (req, res) => {
 app.get("/closeness", async (req, res) => {
   return res.send(await closenessCentrality());
 });
+
 app.get("/cg", async (req, res) => {
   return res.send(await cytoGraph());
+});
+
+app.get("/cng", async (req, res) => {
+  return res.send(await cytoSnapGraph());
 });
 
 app.listen(3000, function () {

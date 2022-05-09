@@ -3,7 +3,7 @@ import neo4j from "neo4j-driver";
 
 import { forceGraph } from "./ForceGraph/ForceGraph.js";
 import { forceTree } from "./ForceTree/ForceTree.js";
-import { cyto } from "./Cytoscape/Cytoscape.js";
+import { closenessCentrality } from "./Cytoscape/ClosenessCentrality.js";
 import { cytoGraph } from "./Cytoscape/CytoGraph.js";
 
 const app = express();
@@ -11,16 +11,16 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/static", express.static("public"));
 
-app.get("/test", async (req, res) => {
+app.get("/forcetree", async (req, res) => {
   return res.send(await forceTree());
 });
 
-app.get("/fg", async (req, res) => {
+app.get("/forcegraph", async (req, res) => {
   return res.send(await forceGraph());
 });
 
-app.get("/cytoscape", async (req, res) => {
-  return res.send(await cyto());
+app.get("/closeness", async (req, res) => {
+  return res.send(await closenessCentrality());
 });
 app.get("/cg", async (req, res) => {
   return res.send(await cytoGraph());

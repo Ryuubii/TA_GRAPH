@@ -1,7 +1,6 @@
 import "jsdom-global/register.js";
 import cytoscape from "cytoscape";
 import { readCsv } from "../Helpers/ReadCsv.js";
-import { getNodesAndLinks } from "../Helpers/GetNodesAndLinks.js";
 import { getEles } from "../Helpers/GetEles.js";
 
 export async function cytoGraph(params) {

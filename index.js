@@ -1,6 +1,7 @@
 import "global-jsdom/register";
 import express from "express";
 import neo4j from "neo4j-driver";
+import fs from 'fs';
 
 import { forceGraph } from "./ForceGraph/ForceGraph.js";
 import { forceTree } from "./ForceTree/ForceTree.js";
@@ -30,7 +31,12 @@ app.get("/cg", async (req, res) => {
 });
 
 app.get("/cng", async (req, res) => {
-  return res.send(await cytoSnapGraph());
+  let base64image = await cytoSnapGraph();
+  console.log(base64image);
+  fs.writeFile('image.png', base64image, {encoding: 'base64'}, function(err) {
+    console.log('File created');
+  });
+  return res.send("Image created");
 });
 
 app.listen(3000, function () {

@@ -1,6 +1,7 @@
 import cytosnap from "cytosnap";
 import { readCsv } from "../Helpers/ReadCsv.js";
 import { getEles } from "../Helpers/GetEles.js";
+import fs from 'fs';
 
 export async function cytoSnapGraph(params) {
     let snap = cytosnap();
@@ -36,6 +37,9 @@ export async function cytoSnapGraph(params) {
       }).then(function( img ){
         // do whatever you want with img
         imgUri = img;
+        fs.writeFile('image.png', imgUri, {encoding: 'base64'}, function(err) {
+          console.log('File created');
+        });
       });
 
       setTimeout(() => {

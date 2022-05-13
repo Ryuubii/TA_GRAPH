@@ -3,6 +3,20 @@ import { getEles } from "../Helpers/GetEles.js";
 import { stringify } from 'flatted';
 
 export async function cytoGraphWeightJSON(params) {
+    let eles = [];
+    try {
+        const response = await fetch("http://localhost:3000/static/data.json");
+        const data = await response.json();
+
+        eles = getEles(data);
+        
+    } catch (error) {
+        console.log("Invalid JSON");
+        return {
+            "code" : 403,
+            "message" : "Invalid json. JSON format is {}"
+        }
+    }
 
     let cy = cytoscape({
         // container: document.getElementById("cy"),
@@ -10,12 +24,8 @@ export async function cytoGraphWeightJSON(params) {
         padding: 30,
         centerGraph: true,
     });
-    fetch("http://localhost:3000/static/data.json").then(function(response){
-        return response.json();
-    }).then(function(data){
-        const eles = getEles(data);
-        cy.add(eles);
-    })
+
+    cy.add(eles);
 
     const markov = cy.elements().markovClustering();
     const jsonified = stringify(markov)

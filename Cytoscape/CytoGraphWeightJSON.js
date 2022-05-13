@@ -10,7 +10,7 @@ Object.defineProperty(window.HTMLHtmlElement.prototype, 'clientHeight', {value: 
 Object.defineProperty(document.getElementById('cy'), 'offsetWidth', {value: 1920});
 Object.defineProperty(document.getElementById('cy'), 'offsetHeight', {value: 1080});
 
-export async function cytoGraph(params) {
+export async function cytoGraphWeightJSON(params) {
     console.log(document.getElementById('cy').offsetWidth);
     console.log(document.getElementById('cy').offsetHeight);
 
@@ -20,10 +20,12 @@ export async function cytoGraph(params) {
         padding: 30,
         centerGraph: true,
     });
-    const data = await readCsv("datakegiatanorganisasimhs_2016-2020.csv");
-    const eles = getEles(data);
-    console.log(data);
-    cy.add(eles);
+    fetch("http://localhost:3000/static/data.json").then(function(response){
+        return response.json();
+    }).then(function(data){
+        const eles = getEles(data);
+        cy.add(eles);
+    })
 
     const markov = cy.elements().markovClustering();
     // console.log(markov);

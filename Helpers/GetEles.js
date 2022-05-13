@@ -23,7 +23,6 @@ export function getEles(data) {
     });
     i++;
   });
-  console.log(edges);
   return {
     nodes,
     edges

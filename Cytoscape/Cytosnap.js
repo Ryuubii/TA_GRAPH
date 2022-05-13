@@ -37,13 +37,14 @@ export async function cytoSnapGraph(params) {
       }).then(function( img ){
         // do whatever you want with img
         imgUri = img;
-        fs.writeFile('image.png', imgUri, {encoding: 'base64'}, function(err) {
+        let base64Image = img.split(';base64,').pop();
+        fs.writeFile('image.png', base64Image, {encoding: 'base64'}, function(err) {
           console.log('File created');
         });
       });
 
       setTimeout(() => {
-        console.log("Image: \n" + imgUri);
+        console.log("Image: \n" + imgUri.substring(0,20));
         return imgUri;
       }, 5 * 1000);
     

@@ -21,12 +21,11 @@
     "global-jsdom": "^8.4.0",
     "jsdom": "^19.0.0",
     "jsdom-global": "^3.0.2",
+    "mysql2": "^2.3.3",
     "neo4j-driver": "^4.4.5",
     "nodemon": "^2.0.16",
     "sequelize": "^6.19.1",
     "sqlite3": "^5.0.8"
   },
-  "type": "module",
-  "devDependencies": {
-  }
+  "type": "module"
 }

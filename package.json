@@ -23,7 +23,10 @@
     "jsdom-global": "^3.0.2",
     "neo4j-driver": "^4.4.5",
     "nodemon": "^2.0.16",
+    "sequelize": "^6.19.1",
     "sqlite3": "^5.0.8"
   },
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+  }
 }

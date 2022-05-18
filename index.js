@@ -8,6 +8,8 @@ import { closenessCentrality } from "./Cytoscape/ClosenessCentrality.js";
 import { cytoGraph } from "./Cytoscape/CytoGraph.js";
 import { cytoGraphWeightJSON } from "./Cytoscape/CytoGraphWeightJSON.js";
 import { cytoSnapGraph } from "./Cytoscape/Cytosnap.js";
+import { checkConnection } from "./Database/database.js";
+import { CreateDataFile, CreateDataFilesTable, GetDataFileByID } from "./Database/datafileModel.js";
 
 const app = express();
 app.use(express.urlencoded({ extended: true }));
@@ -37,6 +39,11 @@ app.get("/cgwj", async (req, res) => {
 app.get("/cng", async (req, res) => {
   return res.send(await cytoSnapGraph());
 });
+
+await checkConnection();
+await CreateDataFilesTable();
+console.log(await CreateDataFile("Test", "json"));
+console.log(await GetDataFileByID(1));
 
 app.listen(3000, function () {
   console.log("Listening to port 3000 \n http://localhost:3000");

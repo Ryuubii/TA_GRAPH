@@ -7,8 +7,6 @@ export async function closenessCentrality(params) {
         headless: true,
         container: window.document.body,
     });
-    let elesNode = [];
-    let elesLink = [];
     const data = await readCsv("datakegiatanorganisasimhs_2016-2020.csv");
     const eles = getEles(data);
     cy.add(eles);
@@ -16,13 +14,13 @@ export async function closenessCentrality(params) {
     let ccn = cy.elements().closenessCentralityNormalized({ /* my options */ });
     let closeness = []
     cy.nodes().forEach( n => {
-    n.data({
-        ccn: ccn.closeness( n )
-    });
-    closeness.push({
-        id: n.data().id,
-        ccn: ccn.closeness( n )
-    })
+        n.data({
+            ccn: ccn.closeness( n )
+        });
+        closeness.push({
+            id: n.data().id,
+            ccn: ccn.closeness( n )
+        })
     } );
 
     return closeness;

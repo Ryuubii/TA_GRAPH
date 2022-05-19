@@ -14,19 +14,25 @@ export async function cytoGraph(params) {
     console.log(document.getElementById('cy').offsetWidth);
     console.log(document.getElementById('cy').offsetHeight);
 
+    //Initialize Cytoscape
     let cy = cytoscape({
         // container: document.getElementById("cy"),
         fit: true,
         padding: 30,
         centerGraph: true,
     });
+    //Read CSV file as JSON data
     const data = await readCsv("datakegiatanorganisasimhs_2016-2020.csv");
+    //Convert JSON data into array
     const eles = getEles(data);
     console.log(data);
+    //Add the data array into cytoscape graph
     cy.add(eles);
 
+    //Perform Markov clustering to cytoscape graph
     const markov = cy.elements().markovClustering();
     // console.log(markov);
+    //Convert markov clustering graph into JSON
     const jsonified = stringify(markov)
     const l = await cy.layout({
         name: "random"

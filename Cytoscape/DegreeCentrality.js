@@ -15,14 +15,14 @@ export async function degreeCentrality(params) {
     //Add the data array into cytoscape graph
     cy.add(eles);
 
-    //Find the normalized closeness centrality of each node
+    //Find the normalized degree centrality of each node
     let dcn = cy.elements().degreeCentralityNormalized();
     let degree = []
     cy.nodes().forEach( n => {
         n.data({
             dcn: dcn.degree( n )
         });
-        //Push normalized closeness centrality of each node into an array
+        //Push normalized degree centrality of each node into an array
         degree.push({
             id: n.data().id,
             dcn: dcn.degree( n )

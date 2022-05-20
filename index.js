@@ -82,6 +82,26 @@ function getFileExtension(filename) {
   return filename[filename.length-1];
 }
 
+function checkFileType(file, cb){
+  // Allowed ext
+  const filetypes = /json|csv/;
+  // Check ext
+  const extname = filetypes.test(getFileExtension(file.originalname).toLowerCase());
+  // Check mime
+  const mimetype = filetypes.test(file.mimetype);
+
+  if(mimetype && extname){
+    return cb(null,true);
+  } else {
+    cb('Error: CSV or JSON only!');
+  }
+}
+
+function getFileExtension(filename) {
+  filename = filename.split(".");
+  return filename[filename.length-1];
+}
+
 app.listen(3000, function () {
   console.log("Listening to port 3000 \n http://localhost:3000");
 });

@@ -1,8 +1,6 @@
 import "global-jsdom/register";
 import express from "express";
-import neo4j from "neo4j-driver";
 import multer from "multer";
-import fs from "fs";
 
 import { forceGraph } from "./ForceGraph/ForceGraph.js";
 import { forceTree } from "./ForceTree/ForceTree.js";
@@ -12,17 +10,22 @@ import { cytoGraphWeightJSON } from "./Cytoscape/CytoGraphWeightJSON.js";
 import { cytoSnapGraph } from "./Cytoscape/Cytosnap.js";
 import { checkConnection } from "./Database/database.js";
 import { degreeCentrality } from "./Cytoscape/DegreeCentrality.js";
+import { uploader } from "./Helpers/Upload.js";
 import { CreateDataFile, CreateDataFilesTable, GetDataFileByID } from "./Database/datafileModel.js";
 
-const uploadFolder = "public/";
-const upload = multer({ dest: "public/" });
+const upload = multer({ 
+  dest: "public/",
+  fileFilter: function(_req, file, cb){
+    checkFileType(file, cb);
+  }
+});
 const app = express();
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/static", express.static("public"));
 
 app.post("/upload", upload.single("data"), async(req, res) => {
-  
+  return res.send(await uploader(req.file));
 })
 
 app.get("/forcetree", async (req, res) => {
@@ -58,6 +61,26 @@ await checkConnection();
 await CreateDataFilesTable();
 console.log(await CreateDataFile("Test", "json"));
 console.log(await GetDataFileByID(1));
+
+function checkFileType(file, cb){
+  // Allowed ext
+  const filetypes = /json|csv/;
+  // Check ext
+  const extname = filetypes.test(getFileExtension(file.originalname).toLowerCase());
+  // Check mime
+  const mimetype = filetypes.test(file.mimetype);
+
+  if(mimetype && extname){
+    return cb(null,true);
+  } else {
+    cb('Error: CSV or JSON only!');
+  }
+}
+
+function getFileExtension(filename) {
+  filename = filename.split(".");
+  return filename[filename.length-1];
+}
 
 app.listen(3000, function () {
   console.log("Listening to port 3000 \n http://localhost:3000");

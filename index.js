@@ -10,6 +10,7 @@ import { cytoGraphWeightJSON } from "./Cytoscape/CytoGraphWeightJSON.js";
 import { cytoSnapGraph } from "./Cytoscape/Cytosnap.js";
 import { checkConnection } from "./Database/database.js";
 import { degreeCentrality } from "./Cytoscape/DegreeCentrality.js";
+import { betweennessCentrality } from "./Cytoscape/BetweennessCentrality.js";
 import { uploader } from "./Helpers/Upload.js";
 import { CreateDataFile, CreateDataFilesTable, GetDataFileByID } from "./Database/datafileModel.js";
 
@@ -38,6 +39,10 @@ app.get("/forcegraph", async (req, res) => {
 
 app.get("/closeness", async (req, res) => {
   return res.send(await closenessCentrality());
+});
+
+app.get("/betweenness", async (req, res) => {
+  return res.send(await betweennessCentrality());
 });
 
 app.get("/degree", async (req, res) => {

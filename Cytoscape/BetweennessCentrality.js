@@ -2,7 +2,7 @@ import cytoscape from "cytoscape";
 import { readCsv } from "../Helpers/ReadCsv.js";
 import { getEles } from "../Helpers/GetEles.js";
 
-export async function degreeCentrality(params) {
+export async function betweennessCentrality(params) {
     //Initialize Cytoscape graph
     let cy = cytoscape({
         headless: true,

@@ -8,6 +8,7 @@ export async function cytoSnapGraph(params) {
     let snap = cytosnap();
     //Read CSV file as JSON data
     const data = await readCsv("datakegiatanorganisasimhs_2016-2020.csv");
+    const eles = getEles(data);
     //Convert JSON data into array
     let imgUri = "";
     //Start the cytoscape snapshot
@@ -16,7 +17,7 @@ export async function cytoSnapGraph(params) {
         return snap.shot({
           elements: eles,
           layout: {
-            name: 'grid'
+            name: 'circle'
           },
           style: [
             {

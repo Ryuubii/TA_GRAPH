@@ -40,4 +40,5 @@ export async function cytoGraph(params) {
 
     // console.log(body);
     return jsonified;
+    //returnn cy.png();
 }

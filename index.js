@@ -10,6 +10,9 @@ import { cytoGraphWeightJSON } from "./Cytoscape/CytoGraphWeightJSON.js";
 import { cytoSnapGraph } from "./Cytoscape/Cytosnap.js";
 import { checkConnection } from "./Database/database.js";
 import { CreateDataFile, CreateDataFilesTable, GetDataFileByID } from "./Database/datafileModel.js";
+import { PuppeteerTest } from "./Cytoscape/Puppeteer.js";
+
+
 
 const app = express();
 app.use(express.urlencoded({ extended: true }));
@@ -38,6 +41,11 @@ app.get("/cgwj", async (req, res) => {
 
 app.get("/cng", async (req, res) => {
   return res.send(await cytoSnapGraph());
+});
+
+app.get("/puppet", async (req, res) => {
+  await PuppeteerTest()
+  return res.send("Puppeteer running");
 });
 
 await checkConnection();

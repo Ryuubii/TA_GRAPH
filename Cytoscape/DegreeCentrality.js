@@ -2,7 +2,7 @@ import cytoscape from "cytoscape";
 import { readCsv } from "../Helpers/ReadCsv.js";
 import { getEles } from "../Helpers/GetEles.js";
 
-export async function closenessCentrality(params) {
+export async function degreeCentrality(params) {
     //Initialize Cytoscape graph
     let cy = cytoscape({
         headless: true,
@@ -15,19 +15,19 @@ export async function closenessCentrality(params) {
     //Add the data array into cytoscape graph
     cy.add(eles);
 
-    //Find the normalized closeness centrality of each node
-    let ccn = cy.elements().closenessCentralityNormalized({ /* my options */ });
-    let closeness = []
+    //Find the normalized degree centrality of each node
+    let dcn = cy.elements().degreeCentralityNormalized();
+    let degree = []
     cy.nodes().forEach( n => {
         n.data({
-            ccn: ccn.closeness( n )
+            dcn: dcn.degree( n )
         });
-        //Push normalized closeness centrality of each node into an array
-        closeness.push({
+        //Push normalized degree centrality of each node into an array
+        degree.push({
             id: n.data().id,
-            ccn: ccn.closeness( n )
+            dcn: dcn.degree( n )
         })
     } );
 
-    return closeness;
+    return degree;
 }

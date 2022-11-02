@@ -58,5 +58,20 @@ export async function GetDataFileByID(id) {
   }
 }
 
+export async function GetMaxID() {
+  try {
+    const df = await DataFile.findOne({
+      order: [
+        ['id','DESC']
+      ]
+    });
+    return df.toJSON();
+  } catch (error) {
+    return JSON.stringify({
+      message: "Could not file the requested file."
+    })
+  }
+}
+
 // the defined model is the class itself
 console.log(DataFile === sequelize.models.DataFile);

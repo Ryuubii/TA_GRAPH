@@ -13,6 +13,9 @@ import { degreeCentrality } from "./Cytoscape/DegreeCentrality.js";
 import { betweennessCentrality } from "./Cytoscape/BetweennessCentrality.js";
 import { uploader } from "./Helpers/Upload.js";
 import { CreateDataFile, CreateDataFilesTable, GetDataFileByID } from "./Database/datafileModel.js";
+import { PuppeteerTest } from "./Cytoscape/Puppeteer.js";
+
+
 
 const upload = multer({ 
   dest: "public/",
@@ -61,6 +64,10 @@ app.get("/cng", async (req, res) => {
   return res.send(await cytoSnapGraph());
 });
 
+app.get("/puppet", async (req, res) => {
+  await PuppeteerTest()
+  return res.send("Puppeteer running");
+});
 
 await checkConnection();
 await CreateDataFilesTable();

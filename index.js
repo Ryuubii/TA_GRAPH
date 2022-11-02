@@ -64,13 +64,10 @@ app.get("/cng", async (req, res) => {
   return res.send(await cytoSnapGraph());
 });
 
-<<<<<<< HEAD
 app.get("/puppet", async (req, res) => {
   await PuppeteerTest()
   return res.send("Puppeteer running");
 });
-=======
->>>>>>> 47df589b0c968361aa566f0428df9206f1a9bb84
 
 await checkConnection();
 await CreateDataFilesTable();

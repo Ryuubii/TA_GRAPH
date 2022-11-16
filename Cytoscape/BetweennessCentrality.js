@@ -15,19 +15,19 @@ export async function betweennessCentrality(params) {
     //Add the data array into cytoscape graph
     cy.add(eles);
 
-    //Find the normalized degree centrality of each node
-    let dcn = cy.elements().betweennessCentrality();
-    let degree = []
+    //Find the betweenness centrality of each node
+    let bcn = cy.elements().betweennessCentrality();
+    let betweenness = []
     cy.nodes().forEach( n => {
         n.data({
-            dcn: dcn.degree( n )
+            bcn: bcn.betweenness( n )
         });
-        //Push normalized degree centrality of each node into an array
-        degree.push({
+        //Push betweenness centrality of each node into an array
+        betweenness.push({
             id: n.data().id,
-            dcn: dcn.degree( n )
+            bcn: bcn.betweenness( n )
         })
     } );
 
-    return degree;
+    return betweenness;
 }

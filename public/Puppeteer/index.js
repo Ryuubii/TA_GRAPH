@@ -1,4 +1,4 @@
-
+// change this function to use the dataset from endpoint 
 function getEles(data) {
   let nodes = [];
   let edges = [];
@@ -32,6 +32,9 @@ function getEles(data) {
   }
 }
 
+// New run method where it calls the endpoint to fetch the dataset
+
+
 async function run(csvUrl) {
   Papa.parse(csvUrl, {
     download: true,
@@ -61,6 +64,7 @@ function renderGraph(results) {
   
 }
 
-
+// Here you would
+// await run(graphID)
 await run("https://raw.githubusercontent.com/Ryuubii/TA_GRAPH/main/public/datakegiatanorganisasimhs_2016-2020.csv");
 
